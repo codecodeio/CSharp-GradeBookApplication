@@ -45,5 +45,10 @@ namespace GradeBook
         {
             Grades.Remove(grade);
         }
+
+        public void DisplayStudent()
+        {
+            Console.WriteLine(this.Name + " " + this.Type + " " + this.Enrollment + " " + this.AverageGrade);
+        }
     }
 }
