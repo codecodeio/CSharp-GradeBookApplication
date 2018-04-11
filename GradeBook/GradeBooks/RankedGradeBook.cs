@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Buffers;
 
 namespace GradeBook.GradeBooks
 {
@@ -12,6 +13,30 @@ namespace GradeBook.GradeBooks
             Type = Enums.GradeBookType.Ranked;
         }
 
+        public override void CalculateStatistics()
+        {
+            if (Students.Count < 5)
+            {
+                Console.WriteLine("Ranked grading requires at least 5 students with grades in order to properly calculate a student's overall grade.");
+                return;
+            }
+            else
+            {
+                base.CalculateStatistics();
+            }
+        }
+        public override void CalculateStudentStatistics(string name)
+        {
+            if (Students.Count < 5)
+            {
+                Console.WriteLine("Ranked grading requires at least 5 students with grades in order to properly calculate a student's overall grade.");
+                return;
+            }
+            else
+            {
+                base.CalculateStudentStatistics(name);
+            }
+        }
         public override char GetLetterGrade(double averageGrade)
         {
             if(Students.Count < 5)
@@ -23,7 +48,7 @@ namespace GradeBook.GradeBooks
                 //calculate bucket size
                 var bucketSize = (int)Math.Ceiling(Students.Count * 0.2);
                 
-                Console.WriteLine("BucketSize: " + bucketSize);
+                //Console.WriteLine("BucketSize: " + bucketSize);
                 //create sorted average grade list
                 SortedList studentList = new SortedList();
                 int i = 0;
@@ -35,7 +60,7 @@ namespace GradeBook.GradeBooks
                 IList vl = studentList.GetValueList();
                 //loop over sorted values
                 for (i = 0; i < studentList.Count; i++){
-                    Console.WriteLine(vl[i]);
+                    //Console.WriteLine(vl[i]);
                     if(averageGrade >= (double)vl[i])
                     {
                         i++;
@@ -43,7 +68,7 @@ namespace GradeBook.GradeBooks
                     }
                 }
 
-                Console.WriteLine("Bucket: " + i);
+                //Console.WriteLine("Bucket: " + i);
                 if (i <= bucketSize)
                     return 'A';
                 else if (i <= bucketSize*2)
